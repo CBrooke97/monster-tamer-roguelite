@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bua1cqc63ilrt"]
 
-[ext_resource type="Script" path="res://Scripts/RedSlime.cs" id="1_rlfj0"]
+[ext_resource type="Script" uid="uid://1e4gv1fxop8d" path="res://Scripts/RedSlime.cs" id="1_rlfj0"]
 [ext_resource type="SpriteFrames" uid="uid://dopijvp7aklc4" path="res://Assets/SpriteFrames/SF_RedSlime.tres" id="2_s8auu"]
-[ext_resource type="Script" path="res://Scripts/Monster.cs" id="3_86rea"]
+[ext_resource type="Script" uid="uid://dcxywlelyb5tp" path="res://Scripts/Monster.cs" id="3_86rea"]
 [ext_resource type="Resource" uid="uid://cdlmcqnlwe24" path="res://Resources/MDR_RedSlime.tres" id="4_pji70"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1j815"]

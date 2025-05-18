@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://drh11melydu54" path="res://Assets/LandscapeTileSet.tres" id="1_hleyw"]
 [ext_resource type="PackedScene" uid="uid://bua1cqc63ilrt" path="res://Scenes/red_slime.tscn" id="1_rjco6"]
-[ext_resource type="Script" path="res://Scripts/LinearProjectile.cs" id="1_wvfuf"]
+[ext_resource type="Script" uid="uid://crvmmia3ccpad" path="res://Scripts/LinearProjectile.cs" id="1_wvfuf"]
 [ext_resource type="PackedScene" uid="uid://2tlrwsbgif46" path="res://Scenes/Coin.tscn" id="3_mrmql"]
 [ext_resource type="Texture2D" uid="uid://caunv0sh16p5r" path="res://Assets/Gold coin.png" id="6_c3g6r"]
 

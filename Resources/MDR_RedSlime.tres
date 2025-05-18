@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="MonsterDefinitionResource" load_steps=3 format=3 uid="uid://cdlmcqnlwe24"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cdlmcqnlwe24"]
 
-[ext_resource type="Script" path="res://Scripts/MonsterDefinitionResource.cs" id="1_77cmy"]
+[ext_resource type="Script" uid="uid://di5crknqv2au" path="res://Scripts/MonsterDefinitionResource.cs" id="1_77cmy"]
 [ext_resource type="SpriteFrames" uid="uid://dopijvp7aklc4" path="res://Assets/SpriteFrames/SF_RedSlime.tres" id="1_ckfr5"]
 
 [resource]

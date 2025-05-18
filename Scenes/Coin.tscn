@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://2tlrwsbgif46"]
 
-[ext_resource type="Script" path="res://Scripts/Coin.cs" id="1_3ud63"]
+[ext_resource type="Script" uid="uid://bprojce5ml1ie" path="res://Scripts/Coin.cs" id="1_3ud63"]
 [ext_resource type="SpriteFrames" uid="uid://b0dawpssu5qu" path="res://Assets/SpriteFrames/SF_Coin.tres" id="2_mo05b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0kp15"]

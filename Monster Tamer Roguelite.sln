@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monster Tamer Roguelite", "Monster Tamer Roguelite.csproj", "{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monster Tamer Roguelite", "Monster Tamer Roguelite.csproj", "{9F33B4E1-F875-41F9-90B2-A4372986BF09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{D846BAD4-7255-4789-A9DB-3CF9EDB0D4DB}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{9F33B4E1-F875-41F9-90B2-A4372986BF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F33B4E1-F875-41F9-90B2-A4372986BF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F33B4E1-F875-41F9-90B2-A4372986BF09}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{9F33B4E1-F875-41F9-90B2-A4372986BF09}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{9F33B4E1-F875-41F9-90B2-A4372986BF09}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{9F33B4E1-F875-41F9-90B2-A4372986BF09}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

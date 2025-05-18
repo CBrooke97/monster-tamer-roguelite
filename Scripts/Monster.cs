@@ -40,17 +40,23 @@ public partial class Monster : Node
 	{
 		GD.Print("OnDefinitionChanged fired.");
 
+		// Prevent the crash
+		if (_definition == null)
+		{
+			GD.PrintErr("Definition is null in OnDefinitionChanged_Editor.");
+			return;
+		}
+
 		Node parent = GetParent();
 
-		if (parent is null)
+		if (parent == null)
 			return;
-		
+
 		AnimatedSprite2D sprite2D = parent.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
 
 		if (sprite2D != null)
 		{
 			GD.Print("Sprite was not null");
-
 			sprite2D.SetSpriteFrames(_definition.SpriteFrames);
 		}
 		else

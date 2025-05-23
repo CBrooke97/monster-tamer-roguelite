@@ -14,14 +14,14 @@ public partial class MonsterDefinitionResource : Resource
 
 	[Export] private StringName _monsterName = "Placeholder";
 	[Export] private SpriteFrames _monsterSpriteFrames;
-	
-	[Export] public Godot.Collections.Dictionary<StringName, float> AttributeMap = new Godot.Collections.Dictionary<StringName, float>
+
+	[Export] public Godot.Collections.Dictionary<EAttributeType, float> AttributeMap = new()
 	{
-		{"Health", 100.0f },
-		{"Attack", 10.0f },
-		{"Defence", 10.0f },
-		{"MagicAttack", 10.0f },
-		{"MagicDefence", 10.0f },
-		{"Speed", 10.0f }
+		{ EAttributeType.Health, 100.0f },
+		{ EAttributeType.Attack, 10.0f },
+		{ EAttributeType.Defence, 10.0f },
+		{ EAttributeType.MagicAttack, 10.0f },
+		{ EAttributeType.MagicDefence, 10.0f },
+		{ EAttributeType.Speed, 10.0f }
 	};
 }

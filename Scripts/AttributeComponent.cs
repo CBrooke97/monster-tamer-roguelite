@@ -4,9 +4,9 @@ namespace MonsterTamerRoguelite.Scripts;
 
 public partial class AttributeComponent : Node
 {
-	private Godot.Collections.Dictionary<StringName, float> AttributeMap { get; }
+	private Godot.Collections.Dictionary<EAttributeType, float> AttributeMap { get; }
 
-	public AttributeComponent(Godot.Collections.Dictionary<StringName, float> attributeBase)
+	public AttributeComponent(Godot.Collections.Dictionary<EAttributeType, float> attributeBase)
 	{
 		AttributeMap = attributeBase;
 	}

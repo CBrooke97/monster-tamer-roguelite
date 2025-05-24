@@ -1,9 +1,12 @@
-[gd_scene load_steps=12 format=4 uid="uid://dh75fgccxut15"]
+[gd_scene load_steps=15 format=4 uid="uid://dh75fgccxut15"]
 
 [ext_resource type="TileSet" uid="uid://drh11melydu54" path="res://Assets/LandscapeTileSet.tres" id="1_hleyw"]
 [ext_resource type="PackedScene" uid="uid://bua1cqc63ilrt" path="res://Scenes/red_slime.tscn" id="1_rjco6"]
 [ext_resource type="Script" uid="uid://crvmmia3ccpad" path="res://Scripts/LinearProjectile.cs" id="1_wvfuf"]
+[ext_resource type="Script" uid="uid://643prco8hclr" path="res://Scripts/Player.cs" id="2_v158k"]
+[ext_resource type="Script" uid="uid://4rvamqaiskmg" path="res://Scripts/MonsterTeamComponent.cs" id="3_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://2tlrwsbgif46" path="res://Scenes/Coin.tscn" id="3_mrmql"]
+[ext_resource type="Resource" uid="uid://cdlmcqnlwe24" path="res://Resources/MDR_RedSlime.tres" id="4_ldgsr"]
 [ext_resource type="Texture2D" uid="uid://caunv0sh16p5r" path="res://Assets/Gold coin.png" id="6_c3g6r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_okk8d"]
@@ -47,6 +50,15 @@ radius = 5.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wvfuf")
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("2_v158k")
+metadata/_custom_type_script = "uid://643prco8hclr"
+
+[node name="MonsterTeamComponent" type="Node" parent="Player"]
+script = ExtResource("3_h4fw4")
+MonsterTeam = [ExtResource("4_ldgsr"), null, null, null, null, null]
+metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
 [node name="Tiles" type="Node" parent="."]
 

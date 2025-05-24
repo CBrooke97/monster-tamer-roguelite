@@ -21,4 +21,9 @@ public partial class AttributeComponent : Node
 	public override void _Process(double delta)
 	{
 	}
+
+	public void ApplyAttributeModifer(EAttributeType attributeType, float amount)
+	{
+		AttributeMap[attributeType] = Mathf.Max(AttributeMap[attributeType] + amount, 0.0f);
+	}
 }

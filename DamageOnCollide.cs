@@ -23,7 +23,7 @@ public partial class DamageOnCollide : Node
 	{
 		if (!IsInstanceValid(body)) return;
 		
-		HealthComponent healthComponent = body.GetNodeOrNull<HealthComponent>("HealthComponent");
+		MonsterTamerRoguelite.Scripts.HealthComponent healthComponent = body.GetNodeOrNull<MonsterTamerRoguelite.Scripts.HealthComponent>("HealthComponent");
 
 		if (IsInstanceValid(healthComponent))
 		{

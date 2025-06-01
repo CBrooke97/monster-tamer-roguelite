@@ -5,25 +5,26 @@ namespace MonsterTamerRoguelite.Scripts;
 
 [Tool]
 [GlobalClass]
-public partial class Monster : Node
+public partial class Monster : Node2D
 {
+	[Signal] public delegate void OnMonsterDefinitionChangedEventHandler(MonsterDefinitionResource newDefinition);
+	
 	[Export]
-	public MonsterDefinitionResource Definition
+	public MonsterDefinitionResource? Definition
 	{
 		get => _definition;
 		set
 		{
 			_definition = value;
-			if (Engine.IsEditorHint())
-			{
-				OnDefinitionChanged_Editor();
+			EmitSignal(SignalName.OnMonsterDefinitionChanged, _definition);
+			OnDefinitionChanged();
 				// Your custom logic here
 			}
-		}
 	}
-	private MonsterDefinitionResource _definition;
+	
+	private MonsterDefinitionResource? _definition;
 
-	public StringName MonsterName => Definition.MonsterName;
+	public StringName MonsterName => Definition?.MonsterName;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -36,7 +37,7 @@ public partial class Monster : Node
 	{
 	}
 
-	private void OnDefinitionChanged_Editor()
+	private void OnDefinitionChanged()
 	{
 		GD.Print("OnDefinitionChanged fired.");
 
@@ -47,12 +48,7 @@ public partial class Monster : Node
 			return;
 		}
 
-		Node parent = GetParent();
-
-		if (parent == null)
-			return;
-
-		AnimatedSprite2D sprite2D = parent.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		AnimatedSprite2D sprite2D = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
 
 		if (sprite2D != null)
 		{

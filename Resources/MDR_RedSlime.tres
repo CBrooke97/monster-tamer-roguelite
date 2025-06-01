@@ -7,11 +7,11 @@
 script = ExtResource("1_77cmy")
 _monsterName = &"Placeholder"
 _monsterSpriteFrames = ExtResource("1_ckfr5")
-AttributeMap = Dictionary[StringName, float]({
-&"Attack": 10.0,
-&"Defence": 10.0,
-&"Health": 100.0,
-&"MagicAttack": 10.0,
-&"MagicDefence": 10.0,
-&"Speed": 10.0
+AttributeMap = Dictionary[int, float]({
+0: 100.0,
+1: 10.0,
+2: 10.0,
+3: 10.0,
+4: 10.0,
+5: 10.0
 })

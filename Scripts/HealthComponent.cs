@@ -1,24 +1,28 @@
-using Godot;
 using System;
+using Godot;
+
+namespace MonsterTamerRoguelite.Scripts;
 
 [GlobalClass]
 public partial class HealthComponent : Node
 {
-	[Signal]
-	public delegate void OnDeathEventHandler();
-	
-	[Export] public float BaseHealth = 100.0f;
+	[Signal] public delegate void OnDeathEventHandler();
 
-	private float _maxHealth;
-	private float _currentHealth;
+	[Signal]
+	public delegate void OnHealthChangedEventHandler(double newValue);
+	
+	[Signal]
+	public delegate void OnMaxHealthChangedEventHandler(double newValue);
+	
+	[Export] public double BaseHealth = 100.0f;
+
+	private double _maxHealth;
+	private double _currentHealth;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_maxHealth = BaseHealth;
-		_currentHealth = BaseHealth;
 		
-		GD.Print(_currentHealth + " / " + _maxHealth);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,12 +30,21 @@ public partial class HealthComponent : Node
 	{
 	}
 
-	public void TakeDamage(float amount)
+	public void Init(float baseHealth)
+	{
+		_maxHealth = baseHealth;
+		_currentHealth = _maxHealth;
+
+		EmitSignal(SignalName.OnHealthChanged, _currentHealth);
+		EmitSignal(SignalName.OnMaxHealthChanged, _maxHealth);
+	}
+
+	public void TakeDamage(double amount)
 	{
 		_currentHealth = Math.Clamp(_currentHealth - amount, 0.0f, _maxHealth);
-		
-		GD.Print(_currentHealth);
 
+		EmitSignal(SignalName.OnHealthChanged, _currentHealth);
+		
 		if (_currentHealth <= 0.0f)
 		{
 			EmitSignal(SignalName.OnDeath);
@@ -41,5 +54,12 @@ public partial class HealthComponent : Node
 	public void RestoreHealth(float amount)
 	{
 		_currentHealth = Math.Clamp(_currentHealth + amount, 0.0f, _maxHealth);
+		
+		EmitSignal(SignalName.OnHealthChanged, _currentHealth);
+		
+		if (_currentHealth <= 0.0f)
+		{
+			EmitSignal(SignalName.OnDeath);
+		}
 	}
 }

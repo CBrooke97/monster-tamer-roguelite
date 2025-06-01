@@ -1,15 +1,16 @@
 using Godot;
+using Godot.Collections;
 
 namespace MonsterTamerRoguelite.Scripts;
 
+[GlobalClass]
 public partial class AttributeComponent : Node
 {
-	private Godot.Collections.Dictionary<EAttributeType, float> AttributeMap { get; }
+	[Export] private HealthComponent? _healthComponent;
+	
+	private Dictionary<EAttributeType, float> BaseAttributeMap { get; set; }
 
-	public AttributeComponent(Godot.Collections.Dictionary<EAttributeType, float> attributeBase)
-	{
-		AttributeMap = attributeBase;
-	}
+	private Dictionary<EAttributeType, float> BonusAttributeMap { get; set; } = new();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,8 +23,24 @@ public partial class AttributeComponent : Node
 	{
 	}
 
+	public void OnMonsterDefinitionChanged(MonsterDefinitionResource newDefinition)
+	{
+		BaseAttributeMap = new Dictionary<EAttributeType, float>(newDefinition.AttributeMap);
+
+		BonusAttributeMap.Clear();
+		foreach(EAttributeType attribute in BaseAttributeMap.Keys)
+		{
+			BonusAttributeMap.Add(attribute, 0.0f);
+		}
+
+		if (_healthComponent != null)
+		{
+			_healthComponent.Init(BaseAttributeMap[EAttributeType.Health]);
+		}
+	}
+
 	public void ApplyAttributeModifer(EAttributeType attributeType, float amount)
 	{
-		AttributeMap[attributeType] = Mathf.Max(AttributeMap[attributeType] + amount, 0.0f);
+		BonusAttributeMap[attributeType] = Mathf.Max(BonusAttributeMap[attributeType] + amount, 0.0f);
 	}
 }

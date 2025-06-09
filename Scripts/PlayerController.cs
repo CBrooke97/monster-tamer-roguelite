@@ -29,7 +29,7 @@ public partial class MovementComponent : Node
     public override void _PhysicsProcess(double delta)
     {
         Vector2 inputVector = Input.GetVector("MoveWest", "MoveEast", "MoveNorth", "MoveSouth");
-
+        GD.Print(inputVector);
         bool idle = inputVector.LengthSquared() <= 0;
 
         _animTree.Set("parameters/conditions/Idle", idle);
@@ -37,6 +37,10 @@ public partial class MovementComponent : Node
 
         if (!idle)
         {
+            // When using MoveAndSlide, we do not need to apply delta.
+            // Godot handles this internally.
+            // If using MoveAndCollide, then you must apply delta manually:
+            // player.MoveAndCollide(movementVector * (float)delta);
             Vector2 movementVector = inputVector * MoveSpeed;
 
             _owner.Velocity = movementVector; // Don't add to it — just set it

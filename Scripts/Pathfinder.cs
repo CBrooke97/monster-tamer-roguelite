@@ -2,10 +2,13 @@ using System;
 using Godot;
 using Godot.Collections;
 
-namespace MonsterTamerRoguelite.Scenes.Levels;
+namespace MonsterTamerRoguelite.Scripts;
 
-public partial class PathFindingGridGenerator : Node
+[GlobalClass]
+public partial class Pathfinder : Node
 {
+    public Vector2 GetTileSize() => _aStarGrid2D.CellSize;
+    
     private Array<TileMapLayer> _tileMapLayers;
 
     private AStarGrid2D _aStarGrid2D;
@@ -17,6 +20,8 @@ public partial class PathFindingGridGenerator : Node
     public override void _Ready()
     {
         base._Ready();
+        
+        GD.Print("Pathfinder ready fired");
 
         _tileMapLayers = new();
         
@@ -68,13 +73,23 @@ public partial class PathFindingGridGenerator : Node
             }
         }
     }
+
+    public Vector2 LocalToWorld(Vector2I localPos)
+    {
+        return _aStarGrid2D.CellSize * localPos + _aStarGrid2D.CellSize / 2;
+    }
+
+    public Vector2I WorldToLocal(Vector2 worldPos)
+    {
+        return (Vector2I)(worldPos / _aStarGrid2D.CellSize).Floor();
+    }
     
     public Array<Vector2> GetNavigablePath(Vector2 startWorld, Vector2 endWorld)
     {
         Array<Vector2> navPath = new();
 
-        Vector2I startLocal = (Vector2I)(startWorld / _aStarGrid2D.CellSize).Floor();
-        Vector2I endLocal = (Vector2I)(endWorld / _aStarGrid2D.CellSize).Floor();
+        Vector2I startLocal = WorldToLocal(startWorld);
+        Vector2I endLocal = WorldToLocal(endWorld);
         
         if (!_aStarGrid2D.IsInBoundsv(startLocal) || !_aStarGrid2D.IsInBoundsv(endLocal))
         {
@@ -85,10 +100,24 @@ public partial class PathFindingGridGenerator : Node
 
         foreach (Vector2I localPoint in localPath)
         {
-            Vector2 worldPoint = _aStarGrid2D.CellSize * localPoint;
+            Vector2 worldPoint = LocalToWorld(localPoint);
             navPath.Add(worldPoint);
         }
 
         return navPath;
+    }
+
+    public float GetTileWeightScaleForPos(Vector2 worldPos)
+    {
+        Vector2I tileCoords = WorldToLocal(worldPos);
+
+        return _aStarGrid2D.GetPointWeightScale(tileCoords);
+    }
+    
+    public bool GetIsTileSolidForPos(Vector2 worldPos)
+    {
+        Vector2I tileCoords = WorldToLocal(worldPos);
+
+        return _aStarGrid2D.IsPointSolid(tileCoords);
     }
 }

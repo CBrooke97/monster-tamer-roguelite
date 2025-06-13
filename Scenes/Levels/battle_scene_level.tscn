@@ -45,4 +45,5 @@ position = Vector2(88, 67)
 [node name="PlayerController" type="Node" parent="PlayerChar" node_paths=PackedStringArray("_pathfinder")]
 script = ExtResource("4_qay50")
 _pathfinder = NodePath("../../Pathfinder")
+MoveSpeed = 30.0
 metadata/_custom_type_script = "uid://5nke368xxbpm"

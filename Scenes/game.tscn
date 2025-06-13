@@ -22,9 +22,6 @@ visible = false
 [node name="PlayerCharacter" parent="PlayerState" instance=ExtResource("2_h4fw4")]
 position = Vector2(1, -72)
 
-[node name="MovementComponent" parent="PlayerState/PlayerCharacter" index="3"]
-MoveSpeed = 50.0
-
 [node name="MonsterTeamComponent" type="Node" parent="PlayerState"]
 script = ExtResource("3_h4fw4")
 MonsterTeam = Array[ExtResource("4_1l0tm")]([ExtResource("4_v158k"), ExtResource("4_v158k"), null, null, null, null])

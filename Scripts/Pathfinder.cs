@@ -120,4 +120,9 @@ public partial class Pathfinder : Node
 
         return _aStarGrid2D.IsPointSolid(tileCoords);
     }
+
+    public Vector2 GetClosestTileWorldPos(Vector2 worldPos)
+    {
+        return LocalToWorld(WorldToLocal(worldPos));
+    }
 }

@@ -11,6 +11,8 @@ public partial class PlayerController : Node
     private CharacterBody2D? _owner;
     private AnimationTree? _animTree;
 
+    private Vector2 _targetTilePos;
+
     [Export] public float MoveSpeed { get; private set; } = 10.0f;
 
     public override void _Ready()
@@ -22,6 +24,9 @@ public partial class PlayerController : Node
         _owner = GetParent<CharacterBody2D>();
 
         _animTree = _owner.GetNode<AnimationTree>("AnimationTree");
+
+        _owner.Position = _pathfinder.GetClosestTileWorldPos(_owner.Position);
+        _targetTilePos = _owner.Position;
     }
 
     public override void _Process(double delta)
@@ -39,25 +44,24 @@ public partial class PlayerController : Node
     public override void _PhysicsProcess(double delta)
     {
         Vector2 inputVector = Input.GetVector("MoveWest", "MoveEast", "MoveNorth", "MoveSouth").Round();
-        bool idle = inputVector.LengthSquared() <= 0;
-        float tileWeightScale =
-          _pathfinder.GetTileWeightScaleForPos(_owner.Position + inputVector * _pathfinder.GetTileSize());
+        
+        bool idle = _owner.Position == _targetTilePos;
+        bool movementInput = inputVector.LengthSquared() > 0;
 
         _animTree.Set("parameters/conditions/Idle", idle);
         _animTree.Set("parameters/conditions/Run", !idle);
 
-        if (!idle)
+        if (idle && movementInput)
         {
+            _targetTilePos = _owner.Position + inputVector * _pathfinder.GetTileSize();
+            
             // When using MoveAndSlide, we do not need to apply delta.
             // Godot handles this internally.
             // If using MoveAndCollide, then you must apply delta manually:
             // player.MoveAndCollide(movementVector * (float)delta);
-            if(!_pathfinder.GetIsTileSolidForPos(_owner.Position + inputVector * _pathfinder.GetTileSize()))
+            if(_pathfinder.GetIsTileSolidForPos(_targetTilePos))
             {
-                Vector2 movementVector = inputVector * MoveSpeed;
-
-                _owner.Velocity = movementVector; // Don't add to it — just set it
-                _owner.MoveAndSlide();
+                _targetTilePos = _owner.Position;
             }
         
             _animTree.Set("parameters/Run/blend_position", inputVector);
@@ -65,8 +69,10 @@ public partial class PlayerController : Node
         }
         else
         {
-            _owner.Velocity = Vector2.Zero;
-            _owner.MoveAndSlide();
+            _animTree.Set("parameters/Run/blend_position", inputVector);
+            _animTree.Set("parameters/Idle/blend_position", inputVector);
         }
+
+        _owner.Position = _owner.Position.MoveToward(_targetTilePos, MoveSpeed * (float)delta); 
     }
 }

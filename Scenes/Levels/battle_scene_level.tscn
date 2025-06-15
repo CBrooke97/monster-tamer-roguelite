@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=4 uid="uid://cibnvl0vdrln3"]
+[gd_scene load_steps=10 format=4 uid="uid://cibnvl0vdrln3"]
 
 [ext_resource type="Script" uid="uid://btcr731v23a1x" path="res://Scripts/Pathfinder.cs" id="1_84by1"]
 [ext_resource type="TileSet" uid="uid://cbwrh3oh87bfa" path="res://Assets/TileMaps/Resources/VillageTiles.tres" id="1_tmqml"]
 [ext_resource type="PackedScene" uid="uid://b04cbeog3qlpt" path="res://Scenes/PlayerChar.tscn" id="3_ebtnj"]
 [ext_resource type="Script" uid="uid://5nke368xxbpm" path="res://Scripts/PlayerController.cs" id="4_qay50"]
+[ext_resource type="Script" uid="uid://c7ihjkim52vi4" path="res://Scripts/TurnController.cs" id="5_06ehk"]
+[ext_resource type="Script" uid="uid://cvshki8ultikn" path="res://Scripts/Battle State Machine Scripts/BattleStateMachine.cs" id="5_d280s"]
+[ext_resource type="Script" uid="uid://r874rwyfu6kp" path="res://Scripts/PlayerMoveTurnAction.cs" id="6_3y5fu"]
+[ext_resource type="PackedScene" uid="uid://jhe16ira0mrf" path="res://Scenes/MonsterScene.tscn" id="6_u1otk"]
+[ext_resource type="PackedScene" uid="uid://cfxgrf5iyplfn" path="res://Scenes/HealthBar.tscn" id="7_06ehk"]
 
 [node name="BattleSceneLevel" type="Node2D"]
 
@@ -45,5 +50,23 @@ position = Vector2(88, 67)
 [node name="PlayerController" type="Node" parent="PlayerChar" node_paths=PackedStringArray("_pathfinder")]
 script = ExtResource("4_qay50")
 _pathfinder = NodePath("../../Pathfinder")
+_inputEnabled = false
 MoveSpeed = 30.0
 metadata/_custom_type_script = "uid://5nke368xxbpm"
+
+[node name="TurnController" type="Node" parent="PlayerChar" node_paths=PackedStringArray("_actions")]
+script = ExtResource("5_06ehk")
+_actions = [NodePath("PlayerMoveTurnAction")]
+metadata/_custom_type_script = "uid://c7ihjkim52vi4"
+
+[node name="PlayerMoveTurnAction" type="Node" parent="PlayerChar/TurnController" node_paths=PackedStringArray("_playerController")]
+script = ExtResource("6_3y5fu")
+_playerController = NodePath("../../PlayerController")
+metadata/_custom_type_script = "uid://r874rwyfu6kp"
+
+[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("ActiveChar")]
+script = ExtResource("5_d280s")
+_monsterScene = ExtResource("6_u1otk")
+_healthBarScene = ExtResource("7_06ehk")
+ActiveChar = NodePath("../PlayerChar")
+metadata/_custom_type_script = "uid://cvshki8ultikn"

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://di5crknqv2au" path="res://Scripts/MonsterDefinitionResource.cs" id="4_1l0tm"]
 [ext_resource type="Resource" uid="uid://cdlmcqnlwe24" path="res://Resources/MDR_RedSlime.tres" id="4_v158k"]
 [ext_resource type="PackedScene" uid="uid://cfxgrf5iyplfn" path="res://Scenes/HealthBar.tscn" id="8_v158k"]
-[ext_resource type="Script" uid="uid://cvshki8ultikn" path="res://Scripts/BattleStateMachine.cs" id="9_h4fw4"]
+[ext_resource type="Script" uid="uid://cvshki8ultikn" path="res://Scripts/Battle State Machine Scripts/BattleStateMachine.cs" id="9_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://jhe16ira0mrf" path="res://Scenes/MonsterScene.tscn" id="9_ldgsr"]
 
 [node name="Game" type="Node2D"]

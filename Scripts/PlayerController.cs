@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 using Godot;
 
 namespace MonsterTamerRoguelite.Scripts;
@@ -12,6 +13,8 @@ public partial class PlayerController : Node
     private AnimationTree? _animTree;
 
     private Vector2 _targetTilePos;
+
+    [Export] private bool _inputEnabled = true;
 
     [Export] public float MoveSpeed { get; private set; } = 10.0f;
 
@@ -43,36 +46,46 @@ public partial class PlayerController : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        Vector2 inputVector = Input.GetVector("MoveWest", "MoveEast", "MoveNorth", "MoveSouth").Round();
+        if(_inputEnabled)
+        {
+            Vector2 inputVector = Input.GetVector("MoveWest", "MoveEast", "MoveNorth", "MoveSouth");
+
+            TryMove(inputVector);
+        }
+        
+        _owner.Position = _owner.Position.MoveToward(_targetTilePos, MoveSpeed * (float)delta); 
+    }
+
+    public bool TryMove(Vector2 dir)
+    {
+        Vector2 roundedDir = dir.Round(); 
+        
+        bool hasMovementInput = roundedDir.LengthSquared() > 0;
+
+        if (!hasMovementInput)
+        {
+            return false;
+        }
+        
+        _animTree.Set("parameters/conditions/Idle", !hasMovementInput);
+        _animTree.Set("parameters/conditions/Run", hasMovementInput);
         
         bool idle = _owner.Position == _targetTilePos;
-        bool movementInput = inputVector.LengthSquared() > 0;
 
-        _animTree.Set("parameters/conditions/Idle", idle);
-        _animTree.Set("parameters/conditions/Run", !idle);
-
-        if (idle && movementInput)
+        if (idle && hasMovementInput)
         {
-            _targetTilePos = _owner.Position + inputVector * _pathfinder.GetTileSize();
+            _targetTilePos = _owner.Position + roundedDir * _pathfinder.GetTileSize();
             
-            // When using MoveAndSlide, we do not need to apply delta.
-            // Godot handles this internally.
-            // If using MoveAndCollide, then you must apply delta manually:
-            // player.MoveAndCollide(movementVector * (float)delta);
+            _animTree.Set("parameters/Run/blend_position", roundedDir);
+            _animTree.Set("parameters/Idle/blend_position", roundedDir);
+            
             if(_pathfinder.GetIsTileSolidForPos(_targetTilePos))
             {
                 _targetTilePos = _owner.Position;
+                return false;
             }
-        
-            _animTree.Set("parameters/Run/blend_position", inputVector);
-            _animTree.Set("parameters/Idle/blend_position", inputVector);
-        }
-        else
-        {
-            _animTree.Set("parameters/Run/blend_position", inputVector);
-            _animTree.Set("parameters/Idle/blend_position", inputVector);
         }
 
-        _owner.Position = _owner.Position.MoveToward(_targetTilePos, MoveSpeed * (float)delta); 
+        return true;
     }
 }

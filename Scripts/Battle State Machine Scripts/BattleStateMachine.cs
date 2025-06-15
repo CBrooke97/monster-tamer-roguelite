@@ -3,6 +3,7 @@ using Godot.Collections;
 
 namespace MonsterTamerRoguelite.Scripts;
 
+[GlobalClass]
 public partial class BattleStateMachine : Node
 {
     // Debug
@@ -17,7 +18,6 @@ public partial class BattleStateMachine : Node
     private MonsterTeamComponent? _debugEnemyTeam;
 
     #endregion
-
     
     // Monster Setup
     #region MonsterSetup
@@ -40,19 +40,20 @@ public partial class BattleStateMachine : Node
     private IState? _currentState;
     
     public readonly StartBattleState StartBattleState;
+    public readonly CharacterTurnState CharTurnState;
 #endregion
     public BattleStateMachine()
     {
         StartBattleState = new StartBattleState(this);
+        CharTurnState = new CharacterTurnState(this);
     }
+
+    [Export] public Node ActiveChar { get; set; }
 
     public void StartBattle(MonsterTeamComponent playerTeam, MonsterTeamComponent enemyTeam)
     {
         _playerTeam = playerTeam;
         _enemyTeam = enemyTeam;
-        
-        _currentState = StartBattleState;
-        _currentState.Enter();
 
         MonsterInstances[0].Definition = playerTeam.MonsterTeam[0];
         MonsterInstances[1].Definition = playerTeam.MonsterTeam[1];
@@ -64,6 +65,9 @@ public partial class BattleStateMachine : Node
     public override void _Ready()
     {
         base._Ready();
+        
+        _currentState = StartBattleState;
+        _currentState.Enter();
         
         int columns = 2; // You can change this to 3 or more for wider grids
         int total = MonsterInstances.Length;
@@ -114,11 +118,6 @@ public partial class BattleStateMachine : Node
             _currentState?.Exit();
             _currentState = newState;
             _currentState?.Enter();
-        }
-
-        if (Input.IsActionJustPressed("BottomFaceButton"))
-        {
-            MonsterInstances[0].GetNode<HealthComponent>("HealthComponent").TakeDamage(20.0f);
         }
     }
 }

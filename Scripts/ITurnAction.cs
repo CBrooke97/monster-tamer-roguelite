@@ -3,4 +3,6 @@
 public interface ITurnAction
 {
     bool Execute();
+
+    bool IsComplete();
 }

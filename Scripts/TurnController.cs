@@ -11,25 +11,6 @@ public partial class TurnController : Node
     [Export] private Array<Node> _actions;
 
     [Export] private int _actionPoints = 1;
-    public bool ExecuteTurn()
-    {
-        foreach(ITurnAction act in _actions)
-        {
-            bool actionTaken = act.Execute();
-            
-            if (!actionTaken)
-                continue;
-
-            _actionPoints--;
-
-            if (_actionPoints <= 0)
-                break;
-        }
-        
-        GD.Print(_actionPoints);
-        
-        return _actionPoints <= 0;
-    }
 
     public void Reset()
     {

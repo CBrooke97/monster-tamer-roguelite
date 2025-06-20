@@ -14,9 +14,13 @@ public partial class PlayerController : Node
 
     private Vector2 _targetTilePos;
 
+    public bool IsMoving => _owner?.Position != _targetTilePos;
+
     [Export] private bool _inputEnabled = true;
 
     [Export] public float MoveSpeed { get; private set; } = 10.0f;
+
+    private bool _isMoving = false;
 
     public override void _Ready()
     {
@@ -52,8 +56,25 @@ public partial class PlayerController : Node
 
             TryMove(inputVector);
         }
-        
-        _owner.Position = _owner.Position.MoveToward(_targetTilePos, MoveSpeed * (float)delta); 
+
+        HandleMovement(delta);
+    }
+
+    private void HandleMovement(double delta)
+    {
+        _isMoving = _targetTilePos != _owner.Position;
+
+        _animTree.Set("parameters/conditions/Idle", !_isMoving);
+        _animTree.Set("parameters/conditions/Run", _isMoving);
+
+        if (_isMoving)
+        {
+            Vector2 dir = _targetTilePos - _owner.Position;
+
+            _animTree.Set("parameters/Run/blend_position", dir);
+            _animTree.Set("parameters/Idle/blend_position", dir);
+            _owner.Position = _owner.Position.MoveToward(_targetTilePos, MoveSpeed * (float)delta);
+        }
     }
 
     public bool TryMove(Vector2 dir)
@@ -66,19 +87,11 @@ public partial class PlayerController : Node
         {
             return false;
         }
-        
-        _animTree.Set("parameters/conditions/Idle", !hasMovementInput);
-        _animTree.Set("parameters/conditions/Run", hasMovementInput);
-        
-        bool idle = _owner.Position == _targetTilePos;
 
-        if (idle && hasMovementInput)
+        if (!_isMoving && hasMovementInput)
         {
             _targetTilePos = _owner.Position + roundedDir * _pathfinder.GetTileSize();
-            
-            _animTree.Set("parameters/Run/blend_position", roundedDir);
-            _animTree.Set("parameters/Idle/blend_position", roundedDir);
-            
+
             if(_pathfinder.GetIsTileSolidForPos(_targetTilePos))
             {
                 _targetTilePos = _owner.Position;

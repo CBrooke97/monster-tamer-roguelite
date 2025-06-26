@@ -35,8 +35,10 @@ public partial class BattleStateMachine : Node
     private MonsterTeamComponent? _enemyTeam;
     #endregion
     
-    [Export]public Array<CharacterBody2D> turnQueue;
-    
+    [Export]public Array<CharacterBody2D> TurnQueue;
+    public int CharTurnQueueIndex = 0;
+    public CharacterBody2D ActiveChar => TurnQueue[CharTurnQueueIndex];
+
     // States
     #region States
     private BattleState? _currentState;
@@ -44,15 +46,16 @@ public partial class BattleStateMachine : Node
     public readonly StartBattleState StartBattleState;
     public readonly StartRoundBattleState StartRoundBattleState;
     public readonly CharacterTurnBattleState CharTurnBattleState;
+    public readonly EndRoundBattleState EndRoundBattleState;
 #endregion
     public BattleStateMachine()
     {
         StartBattleState = new StartBattleState(this);
         StartRoundBattleState = new StartRoundBattleState(this);
         CharTurnBattleState = new CharacterTurnBattleState(this);
+        EndRoundBattleState = new EndRoundBattleState(this);
     }
 
-    [Export] public CharacterBody2D ActiveChar { get; set; }
 
     public void StartBattle(MonsterTeamComponent playerTeam, MonsterTeamComponent enemyTeam)
     {

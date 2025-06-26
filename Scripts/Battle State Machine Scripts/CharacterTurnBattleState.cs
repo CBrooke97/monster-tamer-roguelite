@@ -7,8 +7,7 @@ public partial class CharacterTurnBattleState : BattleState
 {
     private TurnController? _turnController;
     private TurnCommand? _currentAction;
-
-    private int turnQueueIndex = 0;
+    
     private int _actionPoints = 1;
     
     public CharacterTurnBattleState(BattleStateMachine battleStateMachine) : base(battleStateMachine) { }
@@ -21,10 +20,10 @@ public partial class CharacterTurnBattleState : BattleState
 
         if (camera2D != null)
         {
+            camera2D.GetParent().RemoveChild(camera2D);
             BattleStateMachine.ActiveChar.AddChild(camera2D);
         }
-
-        turnQueueIndex = 0;
+        
         _actionPoints = 1;
 
         GD.Print("CharTurnState Entered");
@@ -59,16 +58,16 @@ public partial class CharacterTurnBattleState : BattleState
         
         if (_actionPoints <= 0)
         {
-            turnQueueIndex++;
+            BattleStateMachine.CharTurnQueueIndex++;
             
-            if (turnQueueIndex >= BattleStateMachine.turnQueue.Count)
+            if (BattleStateMachine.CharTurnQueueIndex >= BattleStateMachine.TurnQueue.Count)
             {
-                return BattleStateMachine.StartRoundBattleState;
+                BattleStateMachine.CharTurnQueueIndex = 0;
+                return BattleStateMachine.EndRoundBattleState;
             }
             
-            BattleStateMachine.ActiveChar = BattleStateMachine.turnQueue[turnQueueIndex];
-            _turnController = GetTurnController(BattleStateMachine.ActiveChar);
-            _actionPoints = 1;
+            // Returning the same state as current to restart with new char, saves logic duplication.
+            return BattleStateMachine.CharTurnBattleState;
         }
         
         return null;

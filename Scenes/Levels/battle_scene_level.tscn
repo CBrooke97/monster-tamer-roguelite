@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cibnvl0vdrln3"]
+[gd_scene load_steps=11 format=4 uid="uid://cibnvl0vdrln3"]
 
 [ext_resource type="Script" uid="uid://btcr731v23a1x" path="res://Scripts/Pathfinder.cs" id="1_84by1"]
 [ext_resource type="TileSet" uid="uid://cbwrh3oh87bfa" path="res://Assets/TileMaps/Resources/VillageTiles.tres" id="1_tmqml"]
@@ -6,8 +6,9 @@
 [ext_resource type="Script" uid="uid://5nke368xxbpm" path="res://Scripts/PlayerController.cs" id="4_qay50"]
 [ext_resource type="Script" uid="uid://cvshki8ultikn" path="res://Scripts/Battle State Machine Scripts/BattleStateMachine.cs" id="5_d280s"]
 [ext_resource type="Script" uid="uid://de4oy4p43261n" path="res://Scripts/PlayerTurnController.cs" id="5_u1otk"]
-[ext_resource type="Script" uid="uid://e72tdyua80tl" path="res://Scripts/AITurnController.cs" id="6_06ehk"]
+[ext_resource type="PackedScene" uid="uid://bcoek8c6p5wyx" path="res://Scenes/EnemyChar.tscn" id="6_06ehk"]
 [ext_resource type="PackedScene" uid="uid://jhe16ira0mrf" path="res://Scenes/MonsterScene.tscn" id="6_u1otk"]
+[ext_resource type="Script" uid="uid://e72tdyua80tl" path="res://Scripts/AITurnController.cs" id="7_3y5fu"]
 [ext_resource type="PackedScene" uid="uid://cfxgrf5iyplfn" path="res://Scenes/HealthBar.tscn" id="7_06ehk"]
 
 [node name="BattleSceneLevel" type="Node2D"]
@@ -59,24 +60,21 @@ script = ExtResource("5_u1otk")
 ControlledCharacter = NodePath("..")
 metadata/_custom_type_script = "uid://de4oy4p43261n"
 
-[node name="PlayerChar2" parent="." instance=ExtResource("3_ebtnj")]
-position = Vector2(140, 67)
+[node name="EnemyChar" parent="." instance=ExtResource("6_06ehk")]
 
-[node name="PlayerController" type="Node" parent="PlayerChar2" node_paths=PackedStringArray("_pathfinder")]
-script = ExtResource("4_qay50")
-_pathfinder = NodePath("../../Pathfinder")
-_inputEnabled = false
-MoveSpeed = 30.0
-metadata/_custom_type_script = "uid://5nke368xxbpm"
-
-[node name="AITurnController" type="Node" parent="PlayerChar2" node_paths=PackedStringArray("ControlledCharacter")]
-script = ExtResource("6_06ehk")
+[node name="AITurnController" type="Node" parent="EnemyChar" node_paths=PackedStringArray("ControlledCharacter")]
+script = ExtResource("7_3y5fu")
 ControlledCharacter = NodePath("..")
 metadata/_custom_type_script = "uid://e72tdyua80tl"
 
-[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("turnQueue")]
+[node name="PlayerController" type="Node" parent="EnemyChar" node_paths=PackedStringArray("_pathfinder")]
+script = ExtResource("4_qay50")
+_pathfinder = NodePath("../../Pathfinder")
+metadata/_custom_type_script = "uid://5nke368xxbpm"
+
+[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("TurnQueue")]
 script = ExtResource("5_d280s")
 _monsterScene = ExtResource("6_u1otk")
 _healthBarScene = ExtResource("7_06ehk")
-turnQueue = [NodePath("../PlayerChar"), NodePath("../PlayerChar2")]
+TurnQueue = [NodePath("../PlayerChar"), NodePath("../EnemyChar")]
 metadata/_custom_type_script = "uid://cvshki8ultikn"

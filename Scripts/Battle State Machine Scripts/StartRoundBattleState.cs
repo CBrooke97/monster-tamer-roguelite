@@ -11,7 +11,6 @@ public class StartRoundBattleState : BattleState
     public override void Enter()
     {
         GD.Print("Entering Start Round State.");
-        BattleStateMachine.ActiveChar = BattleStateMachine.turnQueue[0];
     }
 
     public override BattleState? Tick()

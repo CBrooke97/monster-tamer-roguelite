@@ -27,14 +27,14 @@ script = ExtResource("3_h4fw4")
 MonsterTeam = Array[ExtResource("4_1l0tm")]([ExtResource("4_v158k"), ExtResource("4_v158k"), null, null, null, null])
 metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
-[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("_debugPlayerTeam", "_debugEnemyTeam", "HealthBarParentNode", "turnQueue")]
+[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("_debugPlayerTeam", "_debugEnemyTeam", "HealthBarParentNode", "TurnQueue")]
 script = ExtResource("9_h4fw4")
 _debugPlayerTeam = NodePath("../PlayerState/MonsterTeamComponent")
 _debugEnemyTeam = NodePath("../EnemyMonsterTeamComponent")
 _monsterScene = ExtResource("9_ldgsr")
 _healthBarScene = ExtResource("8_v158k")
 HealthBarParentNode = NodePath("../CanvasLayer/Control")
-turnQueue = []
+TurnQueue = []
 
 [node name="EnemyMonsterTeamComponent" type="Node" parent="."]
 script = ExtResource("3_h4fw4")

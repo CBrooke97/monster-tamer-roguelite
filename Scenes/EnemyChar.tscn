@@ -237,10 +237,6 @@ frame = 8
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_osi2i")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 3)
-zoom = Vector2(2, 2)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimationTree")
 libraries = {

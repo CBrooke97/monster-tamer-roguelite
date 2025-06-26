@@ -6,29 +6,18 @@ using Godot.Collections;
 namespace MonsterTamerRoguelite.Scripts;
 
 [GlobalClass]
-public partial class TurnController : Node
+public abstract partial class TurnController : Node
 {
-    [Export] private Array<Node> _actions;
+    [Export] public CharacterBody2D? ControlledCharacter { get; private set; }
 
-    [Export] private int _actionPoints = 1;
-
-    public void Reset()
+    public virtual void PossessCharacter(CharacterBody2D character)
     {
-        _actionPoints = 1;
+        ControlledCharacter = character;
     }
-
-    public override void _Ready()
-    {
-        base._Ready();
-
-        foreach (Node node in _actions)
-        {
-            if (node is ITurnAction action)
-            {
-                continue;
-            }
-
-            _actions.Remove(node);
-        }
-    }
+    
+    /// Executes the turn logic for this controller.
+    /// Returns a TurnCommand representing the chosen action, or null if no action is taken.
+    /// <param name="turnContext">The current turn context containing battle state.</param>
+    /// <returns>The chosen TurnCommand, or null.</returns>
+    public abstract TurnCommand? ExecuteTurn(TurnContext turnContext);
 }

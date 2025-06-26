@@ -1,18 +1,18 @@
-using Godot;
 using System;
-using MonsterTamerRoguelite.Scripts;
+using Godot;
 
-[GlobalClass]
-public partial class PlayerMoveTurnAction : Node, ITurnAction
+namespace MonsterTamerRoguelite.Scripts;
+
+public partial class PlayerMoveTurnCommand : TurnCommand
 {
     [Export] private PlayerController? _playerController;
 
-    public bool Execute()
+    public override bool Execute()
     {
         throw new NotImplementedException();
     }
 
-    public bool IsComplete()
+    public override bool IsComplete()
     {
         throw new NotImplementedException();
     }

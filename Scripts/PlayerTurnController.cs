@@ -3,7 +3,7 @@ using Godot;
 namespace MonsterTamerRoguelite.Scripts;
 
 [GlobalClass]
-public partial class PlayerTurnController : Node, ITurnController
+public partial class PlayerTurnController : TurnController
 {
     private CharacterBody2D? _owner;
 
@@ -14,7 +14,7 @@ public partial class PlayerTurnController : Node, ITurnController
         _owner = GetParent<CharacterBody2D>();
     }
 
-    public ITurnAction? ExecuteTurn()
+    public override TurnCommand? ExecuteTurn(TurnContext turnContext)
     {
         if (_owner == null)
             return null;
@@ -23,10 +23,10 @@ public partial class PlayerTurnController : Node, ITurnController
         
         if(moveDir.LengthSquared() > 0)
         {
-            return new MoveTurnAction(_owner, moveDir);
+            return new MoveTurnCommand(turnContext.activeChar, moveDir);
         }
         
         // Return null if no valid actions taken.
         return null;
-    }
+    }     
 }

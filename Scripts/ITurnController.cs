@@ -2,5 +2,5 @@
 
 public interface ITurnController
 {
-    public ITurnAction? ExecuteTurn();
+    public TurnCommand? ExecuteTurn(TurnContext turnContext);
 }

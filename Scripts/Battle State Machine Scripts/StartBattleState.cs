@@ -2,37 +2,36 @@
 
 namespace MonsterTamerRoguelite.Scripts;
 
-public class StartBattleState : IState
+public class StartBattleState : BattleState
 {
-    private BattleStateMachine _battleStateMachine;
-
     private int WaitFrames = 60;
-    public StartBattleState(BattleStateMachine battleStateMachine)
-    {
-        _battleStateMachine = battleStateMachine;
-    }
     
-    public void Enter()
+    public StartBattleState(BattleStateMachine battleStateMachine) : base(battleStateMachine)
+    {
+        
+    }
+
+    public override void Enter()
     {
         WaitFrames = 60;
         GD.Print("StartBattleState Entered");
     }
 
-    public IState? Tick()
+    public override BattleState? Tick()
     {
-        IState? newState = null;
+        BattleState? newState = null;
 
         WaitFrames--;
 
         if (WaitFrames <= 0)
         {
-            newState = _battleStateMachine.CharTurnState;
+            newState = BattleStateMachine.StartRoundBattleState;
         }
         
         return newState;
     }
 
-    public void Exit()
+    public override void Exit()
     {
         GD.Print("StartBattleState Exited");
     }

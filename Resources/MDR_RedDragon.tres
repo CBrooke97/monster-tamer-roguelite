@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MonsterDefinitionResource" load_steps=3 format=3 uid="uid://dgcqoy0j2sod1"]
+
+[ext_resource type="Script" uid="uid://di5crknqv2au" path="res://Scripts/MonsterDefinitionResource.cs" id="1_rvfpv"]
+[ext_resource type="Texture2D" uid="uid://0eagx7vcr3qj" path="res://Assets/Characters/TB_Monster_001_A.png" id="1_w6s0g"]
+
+[resource]
+script = ExtResource("1_rvfpv")
+_monsterName = &"Red Dragon"
+_texture2D = ExtResource("1_w6s0g")
+AttributeMap = Dictionary[int, float]({
+0: 100.0,
+1: 10.0,
+2: 10.0,
+3: 10.0,
+4: 10.0,
+5: 10.0
+})
+metadata/_custom_type_script = "uid://di5crknqv2au"

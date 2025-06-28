@@ -8,7 +8,7 @@ public partial class AttributeComponent : Node
 {
 	[Export] private HealthComponent? _healthComponent;
 	
-	private Dictionary<EAttributeType, float> BaseAttributeMap { get; set; }
+	public Dictionary<EAttributeType, float> BaseAttributeMap { get; private set; }
 
 	private Dictionary<EAttributeType, float> BonusAttributeMap { get; set; } = new();
 
@@ -21,6 +21,11 @@ public partial class AttributeComponent : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	public void SetBaseAttributes(Dictionary<EAttributeType, float> newBaseAttributes)
+	{
+		BaseAttributeMap = newBaseAttributes;
 	}
 
 	public void OnMonsterDefinitionChanged(MonsterDefinitionResource newDefinition)

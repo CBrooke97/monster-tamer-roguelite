@@ -1,15 +1,34 @@
-[gd_scene load_steps=11 format=4 uid="uid://cibnvl0vdrln3"]
+[gd_scene load_steps=16 format=4 uid="uid://cibnvl0vdrln3"]
 
 [ext_resource type="Script" uid="uid://btcr731v23a1x" path="res://Scripts/Pathfinder.cs" id="1_84by1"]
 [ext_resource type="TileSet" uid="uid://cbwrh3oh87bfa" path="res://Assets/TileMaps/Resources/VillageTiles.tres" id="1_tmqml"]
 [ext_resource type="PackedScene" uid="uid://b04cbeog3qlpt" path="res://Scenes/PlayerChar.tscn" id="3_ebtnj"]
-[ext_resource type="Script" uid="uid://5nke368xxbpm" path="res://Scripts/PlayerController.cs" id="4_qay50"]
+[ext_resource type="Script" uid="uid://djyql8asfitqy" path="res://Scripts/MovementComponent.cs" id="5_3y5fu"]
 [ext_resource type="Script" uid="uid://cvshki8ultikn" path="res://Scripts/Battle State Machine Scripts/BattleStateMachine.cs" id="5_d280s"]
 [ext_resource type="Script" uid="uid://de4oy4p43261n" path="res://Scripts/PlayerTurnController.cs" id="5_u1otk"]
 [ext_resource type="PackedScene" uid="uid://bcoek8c6p5wyx" path="res://Scenes/EnemyChar.tscn" id="6_06ehk"]
-[ext_resource type="PackedScene" uid="uid://jhe16ira0mrf" path="res://Scenes/MonsterScene.tscn" id="6_u1otk"]
+[ext_resource type="Script" uid="uid://4rvamqaiskmg" path="res://Scripts/MonsterTeamComponent.cs" id="6_g0pb0"]
 [ext_resource type="Script" uid="uid://e72tdyua80tl" path="res://Scripts/AITurnController.cs" id="7_3y5fu"]
 [ext_resource type="PackedScene" uid="uid://cfxgrf5iyplfn" path="res://Scenes/HealthBar.tscn" id="7_06ehk"]
+[ext_resource type="Resource" uid="uid://dgcqoy0j2sod1" path="res://Resources/MDR_RedDragon.tres" id="8_rb73h"]
+[ext_resource type="Script" uid="uid://bmecs3cuef4r1" path="res://Scripts/AttributeComponent.cs" id="10_pwcn5"]
+[ext_resource type="Script" uid="uid://bgh2qpmhp8h8a" path="res://Scripts/HealthComponent.cs" id="11_grrks"]
+
+[sub_resource type="Resource" id="Resource_abiaf"]
+metadata/__load_path__ = "res://Scripts/Monster.cs"
+
+[sub_resource type="PackedScene" id="PackedScene_rb73h"]
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(1073741828, 1073741827, 16, 15, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("Monster", "Node2D", "script", "metadata/_custom_type_script", "AnimatedSprite2D", "AnimatedSprite2D", "AttributeComponent", "Node", "script", "_healthComponent", "metadata/_custom_type_script", "HealthComponent", "Node", "script", "metadata/_custom_type_script", "OnMonsterDefinitionChanged", "OnMonsterDefinitionChanged"),
+"node_count": 4,
+"node_paths": [NodePath("."), NodePath("."), NodePath("."), NodePath("AttributeComponent"), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 2, 2, 0, 3, 1, 0, 1073741824, 0, 5, 4, -1, 0, 0, 1073741825, 0, 7, 6, -1, 3, 8, 2, 1073741833, 3, 10, 4, 0, 1073741826, 0, 12, 11, -1, 2, 13, 5, 14, 6, 0),
+"variants": [SubResource("Resource_abiaf"), "uid://dcxywlelyb5tp", ExtResource("10_pwcn5"), NodePath("../HealthComponent"), "uid://bmecs3cuef4r1", ExtResource("11_grrks"), "uid://bgh2qpmhp8h8a"],
+"version": 3
+}
 
 [node name="BattleSceneLevel" type="Node2D"]
 
@@ -33,48 +52,49 @@ tile_set = ExtResource("1_tmqml")
 tile_map_data = PackedByteArray("AAADAAMACQAZAAEAAAADAAQACQAZAAIAAAADAAUACQAZAAMAAAADAAYACQAZAAQAAAAEAAYACQAaAAQAAAAFAAYACQAaAAQAAAAGAAYACQAaAAQAAAAHAAMACQAbAAEAAAAHAAQACQAbAAIAAAAHAAUACQAbAAMAAAAHAAYACQAbAAQAAAAEAAIACQAaAAAAAAAGAAIACQAaAAAAAAA=")
 tile_set = ExtResource("1_tmqml")
 
-[node name="PlayerMonsterSpawnA" type="Marker2D" parent="."]
-position = Vector2(88, 88)
+[node name="PlayerState" type="Node" parent="."]
 
-[node name="PlayerMonsterSpawnB" type="Marker2D" parent="."]
-position = Vector2(88, 267)
-
-[node name="EnemyMonsterSpawnA" type="Marker2D" parent="."]
-position = Vector2(554, 90)
-
-[node name="EnemyMonsterSpawnB" type="Marker2D" parent="."]
-position = Vector2(554, 269)
-
-[node name="PlayerChar" parent="." instance=ExtResource("3_ebtnj")]
+[node name="PlayerChar" parent="PlayerState" instance=ExtResource("3_ebtnj")]
 position = Vector2(88, 67)
 
-[node name="PlayerController" type="Node" parent="PlayerChar" node_paths=PackedStringArray("_pathfinder")]
-script = ExtResource("4_qay50")
-_pathfinder = NodePath("../../Pathfinder")
+[node name="MovementComponent" type="Node" parent="PlayerState/PlayerChar"]
+script = ExtResource("5_3y5fu")
 _inputEnabled = false
-MoveSpeed = 30.0
-metadata/_custom_type_script = "uid://5nke368xxbpm"
+metadata/_custom_type_script = "uid://djyql8asfitqy"
 
-[node name="PlayerTurnController" type="Node" parent="PlayerChar" node_paths=PackedStringArray("ControlledCharacter")]
+[node name="TurnController" type="Node" parent="PlayerState" node_paths=PackedStringArray("ControlledCharacter")]
 script = ExtResource("5_u1otk")
-ControlledCharacter = NodePath("..")
+ControlledCharacter = NodePath("../PlayerChar")
 metadata/_custom_type_script = "uid://de4oy4p43261n"
 
-[node name="EnemyChar" parent="." instance=ExtResource("6_06ehk")]
+[node name="MonsterTeamComponent" type="Node" parent="PlayerState"]
+script = ExtResource("6_g0pb0")
+MonsterTeam = [ExtResource("8_rb73h"), ExtResource("8_rb73h"), null, null, null, null]
+metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
-[node name="AITurnController" type="Node" parent="EnemyChar" node_paths=PackedStringArray("ControlledCharacter")]
+[node name="EnemyState" type="Node" parent="."]
+
+[node name="EnemyChar" parent="EnemyState" instance=ExtResource("6_06ehk")]
+
+[node name="MovementComponent2" type="Node" parent="EnemyState/EnemyChar"]
+script = ExtResource("5_3y5fu")
+_inputEnabled = false
+metadata/_custom_type_script = "uid://djyql8asfitqy"
+
+[node name="TurnController" type="Node" parent="EnemyState" node_paths=PackedStringArray("ControlledCharacter")]
 script = ExtResource("7_3y5fu")
-ControlledCharacter = NodePath("..")
+ControlledCharacter = NodePath("../EnemyChar")
 metadata/_custom_type_script = "uid://e72tdyua80tl"
 
-[node name="PlayerController" type="Node" parent="EnemyChar" node_paths=PackedStringArray("_pathfinder")]
-script = ExtResource("4_qay50")
-_pathfinder = NodePath("../../Pathfinder")
-metadata/_custom_type_script = "uid://5nke368xxbpm"
+[node name="MonsterTeamComponent" type="Node" parent="EnemyState"]
+script = ExtResource("6_g0pb0")
+MonsterTeam = [ExtResource("8_rb73h"), null, null, null, null, null]
+metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
-[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("TurnQueue")]
+[node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("_pathfinder", "_characterStates")]
 script = ExtResource("5_d280s")
-_monsterScene = ExtResource("6_u1otk")
+_pathfinder = NodePath("../Pathfinder")
+_characterStates = [NodePath("../PlayerState"), NodePath("../EnemyState")]
+_monsterScene = SubResource("PackedScene_rb73h")
 _healthBarScene = ExtResource("7_06ehk")
-TurnQueue = [NodePath("../PlayerChar"), NodePath("../EnemyChar")]
 metadata/_custom_type_script = "uid://cvshki8ultikn"

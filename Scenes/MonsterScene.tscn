@@ -1,12 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://jhe16ira0mrf"]
+[gd_scene load_steps=3 format=3 uid="uid://cv7mxjomeojo"]
 
-[ext_resource type="Script" uid="uid://dcxywlelyb5tp" path="res://Scripts/Monster.cs" id="1_8mw70"]
 [ext_resource type="Script" uid="uid://bmecs3cuef4r1" path="res://Scripts/AttributeComponent.cs" id="2_yes5e"]
 [ext_resource type="Script" uid="uid://bgh2qpmhp8h8a" path="res://Scripts/HealthComponent.cs" id="3_yes5e"]
 
 [node name="Monster" type="Node2D"]
-script = ExtResource("1_8mw70")
-metadata/_custom_type_script = "uid://dcxywlelyb5tp"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 
@@ -18,5 +15,3 @@ metadata/_custom_type_script = "uid://bmecs3cuef4r1"
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_yes5e")
 metadata/_custom_type_script = "uid://bgh2qpmhp8h8a"
-
-[connection signal="OnMonsterDefinitionChanged" from="." to="AttributeComponent" method="OnMonsterDefinitionChanged"]

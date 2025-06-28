@@ -14,7 +14,7 @@ public partial class CharacterTurnBattleState : BattleState
 
     public override void Enter()
     {
-        _turnController = GetTurnController(BattleStateMachine.ActiveChar);
+        _turnController = BattleStateMachine.ActiveChar.TurnController;
 
         Camera2D? camera2D = BattleStateMachine.ActiveChar.GetViewport().GetCamera2D();
 
@@ -48,7 +48,7 @@ public partial class CharacterTurnBattleState : BattleState
         {
             TurnContext turnContext = new()
             {
-                activeChar = BattleStateMachine.ActiveChar
+                ActiveChar = BattleStateMachine.ActiveChar
             };
 
             _currentAction = _turnController.ExecuteTurn(turnContext);

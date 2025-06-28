@@ -12,7 +12,10 @@ public partial class MonsterDefinitionResource : Resource
 	public StringName MonsterName => _monsterName;
 	public SpriteFrames SpriteFrames => _monsterSpriteFrames;
 
+	public Texture2D Texture2D => _texture2D;
+
 	[Export] private StringName _monsterName = "Placeholder";
+	[Export] private Texture2D _texture2D;
 	[Export] private SpriteFrames _monsterSpriteFrames;
 
 	[Export] public Godot.Collections.Dictionary<EAttributeType, float> AttributeMap = new()

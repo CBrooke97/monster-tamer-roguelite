@@ -5,10 +5,10 @@ using Godot;
 namespace MonsterTamerRoguelite.Scripts;
 
 [GlobalClass]
-public partial class PlayerController : Node
+public partial class MovementComponent : Node
 {
-    [Export] public Pathfinder? _pathfinder;
-    
+    [Export] public Pathfinder? Pathfinder;
+
     private CharacterBody2D? _owner;
     private AnimationTree? _animTree;
 
@@ -18,7 +18,7 @@ public partial class PlayerController : Node
 
     [Export] private bool _inputEnabled = true;
 
-    [Export] public float MoveSpeed { get; private set; } = 10.0f;
+    [Export] public float MoveSpeed { get; private set; } = 30.0f;
 
     private bool _isMoving = false;
 
@@ -26,14 +26,11 @@ public partial class PlayerController : Node
     {
         base._Ready();
         
-        Debug.Assert(_pathfinder != null, "Pathfinder is null! Please set a Pathfinder on the PlayerController.");
+        Debug.Assert(Pathfinder != null, "Pathfinder is null! Please set a Pathfinder on the PlayerController.");
 
         _owner = GetParent<CharacterBody2D>();
 
         _animTree = _owner.GetNode<AnimationTree>("AnimationTree");
-
-        _owner.Position = _pathfinder.GetClosestTileWorldPos(_owner.Position);
-        _targetTilePos = _owner.Position;
     }
 
     public override void _Process(double delta)
@@ -50,6 +47,9 @@ public partial class PlayerController : Node
 
     public override void _PhysicsProcess(double delta)
     {
+        if (_owner == null || Pathfinder == null)
+            return;
+        
         if(_inputEnabled)
         {
             Vector2 inputVector = Input.GetVector("MoveWest", "MoveEast", "MoveNorth", "MoveSouth");
@@ -90,9 +90,9 @@ public partial class PlayerController : Node
 
         if (!_isMoving && hasMovementInput)
         {
-            _targetTilePos = _owner.Position + roundedDir * _pathfinder.GetTileSize();
+            _targetTilePos = _owner.Position + roundedDir * Pathfinder.GetTileSize();
 
-            if(_pathfinder.GetIsTileSolidForPos(_targetTilePos))
+            if(Pathfinder.GetIsTileSolidForPos(_targetTilePos))
             {
                 _targetTilePos = _owner.Position;
                 return false;

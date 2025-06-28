@@ -5,7 +5,7 @@ namespace MonsterTamerRoguelite.Scripts;
 
 public partial class PlayerMoveTurnCommand : TurnCommand
 {
-    [Export] private PlayerController? _playerController;
+    [Export] private MovementComponent? _playerController;
 
     public override bool Execute()
     {

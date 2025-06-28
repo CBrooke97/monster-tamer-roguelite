@@ -11,6 +11,6 @@ public partial class AITurnController : TurnController
         Vector2 randDir = new Vector2(rand, 1.0f - rand);
         randDir.Round();
 
-        return new MoveTurnCommand(turnContext.activeChar, randDir);
+        return new MoveTurnCommand(turnContext.ActiveChar, randDir);
     }
 }

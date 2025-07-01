@@ -7,8 +7,8 @@ namespace MonsterTamerRoguelite.Scripts;
 [GlobalClass]
 public partial class BattleStateMachine : Node
 {
-    [Export] private Pathfinder _pathfinder;
-    [Export] private Array<Node> _characterStates;
+    [Export] public Pathfinder Pathfinder;
+    [Export] public Array<Node> CharacterStates;
 
     // Monster Setup
     #region MonsterSetup
@@ -46,25 +46,6 @@ public partial class BattleStateMachine : Node
     public override void _Ready()
     {
         base._Ready();
-
-        TurnQueue = new Array<MTRCharacter>();
-        
-        foreach (Node characterState in _characterStates)
-        {
-            MonsterTeamComponent? mtc = characterState.GetNodeOrNull<MonsterTeamComponent>("MonsterTeamComponent");
-
-            if (mtc == null)
-            {
-                GD.PrintErr($"The character state '{characterState.Name}' does not have a monster team component!");
-                continue;
-            }
-            
-            mtc.OnEnterBattle(_pathfinder);
-
-            TurnQueue += mtc.CharacterInstances;
-        }
-        
-        TurnQueue.Shuffle();
 
         _currentState = StartBattleState;
         _currentState.Enter();

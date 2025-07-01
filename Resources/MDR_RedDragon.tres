@@ -7,6 +7,8 @@
 script = ExtResource("1_rvfpv")
 _monsterName = &"Red Dragon"
 _texture2D = ExtResource("1_w6s0g")
+_hFrames = 8
+_vFrames = 1
 AttributeMap = Dictionary[int, float]({
 0: 100.0,
 1: 10.0,

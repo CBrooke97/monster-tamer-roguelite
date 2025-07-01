@@ -10,19 +10,16 @@ public partial class MonsterTeamComponent : Node
     public Array<MTRCharacter> CharacterInstances { get; private set; } = new();
 
     [Export] private PackedScene _monsterObjTemplate = ResourceLoader.Load<PackedScene>("res://Scenes/EnemyChar.tscn");
-    
-    [Export]
-    public Array<MonsterDefinitionResource?> MonsterTeam { get; private set; } = new Array<MonsterDefinitionResource?>()
-    {
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    };
 
-    public void OnEnterBattle(Pathfinder pathfinder)
+    [Export]
+    public Array<MonsterDefinitionResource> MonsterTeam { get; set; } = new Array<MonsterDefinitionResource>();
+
+    public void OnEnterBattle()
+    {
+        InstantiateCharactersFromTeam();
+    }
+
+    private void InstantiateCharactersFromTeam()
     {
         var owner = GetParent();
 
@@ -31,7 +28,7 @@ public partial class MonsterTeamComponent : Node
             GD.PrintErr($"{Name} does not have a valid owner!");
             return;
         }
-        
+
         TurnController? turnController = owner.GetNodeOrNull<TurnController>("TurnController");
 
         if (turnController == null)
@@ -39,13 +36,13 @@ public partial class MonsterTeamComponent : Node
             GD.PrintErr($"{owner.Name} does not have a valid turn controller!");
             return;
         }
-        
-        foreach(var definition in MonsterTeam)
+
+        foreach (var definition in MonsterTeam)
         {
             if (definition == null)
                 continue;
-            
-            MTRCharacter character = MTRCharacterFactory.Create(definition, turnController, pathfinder);
+
+            MTRCharacter character = MTRCharacterFactory.Create(definition, turnController);
             CharacterInstances.Add(character);
             owner.AddChild(character);
         }

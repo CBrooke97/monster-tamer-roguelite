@@ -7,8 +7,6 @@ namespace MonsterTamerRoguelite.Scripts;
 [GlobalClass]
 public partial class MovementComponent : Node
 {
-    [Export] public Pathfinder? Pathfinder;
-
     private CharacterBody2D? _owner;
     private AnimationTree? _animTree;
 
@@ -26,11 +24,12 @@ public partial class MovementComponent : Node
     {
         base._Ready();
         
-        Debug.Assert(Pathfinder != null, "Pathfinder is null! Please set a Pathfinder on the PlayerController.");
-
         _owner = GetParent<CharacterBody2D>();
 
         _animTree = _owner.GetNode<AnimationTree>("AnimationTree");
+
+        _owner.Position = Pathfinder.Instance.GetClosestTileWorldPos(_owner.Position);
+        _targetTilePos = _owner.Position;
     }
 
     public override void _Process(double delta)
@@ -47,7 +46,7 @@ public partial class MovementComponent : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_owner == null || Pathfinder == null)
+        if (_owner == null)
             return;
         
         if(_inputEnabled)
@@ -90,9 +89,9 @@ public partial class MovementComponent : Node
 
         if (!_isMoving && hasMovementInput)
         {
-            _targetTilePos = _owner.Position + roundedDir * Pathfinder.GetTileSize();
+            _targetTilePos = _owner.Position + roundedDir * Pathfinder.Instance.GetTileSize();
 
-            if(Pathfinder.GetIsTileSolidForPos(_targetTilePos))
+            if(Pathfinder.Instance.GetIsTileSolidForPos(_targetTilePos))
             {
                 _targetTilePos = _owner.Position;
                 return false;

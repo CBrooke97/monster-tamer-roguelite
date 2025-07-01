@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 using Godot.Collections;
 
@@ -7,6 +8,20 @@ namespace MonsterTamerRoguelite.Scripts;
 [GlobalClass]
 public partial class Pathfinder : Node
 {
+    public static Pathfinder? Instance {
+        get
+        {
+            if (_instance == null)
+            {
+                GD.PrintErr("Pathfinder Instance is null! A valid Pathfinder has not been added to the level!");
+                return null;
+            }
+
+            return _instance;
+        }
+    }
+
+    private static Pathfinder? _instance;
     public Vector2 GetTileSize() => _aStarGrid2D.CellSize;
     
     private Array<TileMapLayer> _tileMapLayers;
@@ -16,12 +31,23 @@ public partial class Pathfinder : Node
     private Array<Vector2I> path = new();
 
     private const string WeightScaleLayerName = "weight_scale";
-    
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+
+        if (_instance != null)
+        {
+            GD.PrintErr($"Trying to override existing instance of Pathfinder! \nCurrent: {_instance.Name} \nNew: {this.Name}");
+            return;
+        }
+        
+        _instance = this;
+    }
+
     public override void _Ready()
     {
         base._Ready();
-        
-        GD.Print("Pathfinder ready fired");
 
         _tileMapLayers = new();
         

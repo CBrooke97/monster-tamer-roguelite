@@ -86,4 +86,9 @@ public partial class AttributeComponent : Node
 			_healthComponent.Init(BaseAttributeMap[EAttributeType.Health]);
 		}
 	}
+
+	public void SetBaseAttributes(Godot.Collections.Dictionary<EAttributeType, float> definitionAttributeMap)
+	{
+		BaseAttributeMap = definitionAttributeMap;
+	}
 }

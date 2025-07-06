@@ -7,6 +7,8 @@
 script = ExtResource("1_77cmy")
 _monsterName = &"Placeholder"
 _monsterSpriteFrames = ExtResource("1_ckfr5")
+_hFrames = 1
+_vFrames = 1
 AttributeMap = Dictionary[int, float]({
 0: 100.0,
 1: 10.0,

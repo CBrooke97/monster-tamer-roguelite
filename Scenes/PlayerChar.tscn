@@ -1,7 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://b04cbeog3qlpt"]
+[gd_scene load_steps=30 format=3 uid="uid://b04cbeog3qlpt"]
 
 [ext_resource type="Texture2D" uid="uid://ias1l8bjcjoq" path="res://Assets/Characters/FD_Character_002_Idle.png" id="1_5jrxl"]
 [ext_resource type="Texture2D" uid="uid://cgwdetlcwiacs" path="res://Assets/Characters/FD_Character_002.png" id="1_ytv4i"]
+[ext_resource type="Script" uid="uid://c33nsekufm3ya" path="res://Scripts/Spell Framework/SpellLoadoutComponent.cs" id="3_q56y2"]
+[ext_resource type="Resource" uid="uid://dmgas4hpwu8w7" path="res://Resources/Spells/SD_Fireball.tres" id="4_irt5m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_osi2i"]
 radius = 5.0
@@ -377,3 +379,8 @@ parameters/conditions/Idle = false
 parameters/conditions/Run = false
 parameters/Idle/blend_position = Vector2(0.0348445, 0.323124)
 parameters/Run/blend_position = Vector2(-0.993256, -0.0107198)
+
+[node name="SpellLoadoutComponent" type="Node" parent="."]
+script = ExtResource("3_q56y2")
+_activeSpells = Array[Object]([ExtResource("4_irt5m")])
+metadata/_custom_type_script = "uid://c33nsekufm3ya"

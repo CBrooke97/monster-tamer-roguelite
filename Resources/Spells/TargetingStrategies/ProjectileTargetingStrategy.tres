@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ProjectileTargetingStrategy" load_steps=2 format=3 uid="uid://c4oa65aholu2q"]
+
+[ext_resource type="Script" uid="uid://qxnfjnm7in7a" path="res://Scripts/Spell Framework/ProjectileTargetingStrategy.cs" id="1_mxcij"]
+
+[resource]
+script = ExtResource("1_mxcij")
+metadata/_custom_type_script = "uid://qxnfjnm7in7a"

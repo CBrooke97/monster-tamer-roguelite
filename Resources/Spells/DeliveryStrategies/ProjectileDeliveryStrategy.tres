@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ProjectileDelivery" load_steps=3 format=3 uid="uid://ge156abajbv5"]
+
+[ext_resource type="Script" uid="uid://wpcnuacywf0y" path="res://Scripts/Spell Framework/ProjectileDelivery.cs" id="1_3i3bq"]
+[ext_resource type="PackedScene" uid="uid://542v4jddt1hf" path="res://Scenes/FireballProjectile.tscn" id="1_ckxni"]
+
+[resource]
+script = ExtResource("1_3i3bq")
+ProjectileScene = ExtResource("1_ckxni")
+Speed = 1.0
+metadata/_custom_type_script = "uid://wpcnuacywf0y"

@@ -1,10 +1,12 @@
-[gd_scene load_steps=27 format=3 uid="uid://bcoek8c6p5wyx"]
+[gd_scene load_steps=29 format=3 uid="uid://bcoek8c6p5wyx"]
 
 [ext_resource type="Script" uid="uid://befouoy30tp7i" path="res://Scripts/MTRCharacter.cs" id="1_8h526"]
 [ext_resource type="Texture2D" uid="uid://cw2pb6ji78hvo" path="res://Assets/Characters/FD_Character_019_Idle.png" id="1_o8tv8"]
 [ext_resource type="Script" uid="uid://bgh2qpmhp8h8a" path="res://Scripts/HealthComponent.cs" id="2_4hvxk"]
 [ext_resource type="Script" uid="uid://bmecs3cuef4r1" path="res://Scripts/AttributeComponent.cs" id="3_8h526"]
 [ext_resource type="Script" uid="uid://djyql8asfitqy" path="res://Scripts/MovementComponent.cs" id="5_8q62j"]
+[ext_resource type="Script" uid="uid://c33nsekufm3ya" path="res://Scripts/Spell Framework/SpellLoadoutComponent.cs" id="6_w0hl6"]
+[ext_resource type="Resource" uid="uid://dmgas4hpwu8w7" path="res://Resources/Spells/SD_Fireball.tres" id="7_g6vwg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_osi2i"]
 radius = 5.0
@@ -268,3 +270,8 @@ metadata/_custom_type_script = "uid://bmecs3cuef4r1"
 script = ExtResource("5_8q62j")
 _inputEnabled = false
 metadata/_custom_type_script = "uid://djyql8asfitqy"
+
+[node name="SpellLoadoutComponent" type="Node" parent="."]
+script = ExtResource("6_w0hl6")
+_activeSpells = Array[Object]([ExtResource("7_g6vwg")])
+metadata/_custom_type_script = "uid://c33nsekufm3ya"

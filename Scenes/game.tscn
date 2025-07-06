@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dh75fgccxut15"]
+[gd_scene load_steps=12 format=3 uid="uid://dh75fgccxut15"]
 
 [ext_resource type="PackedScene" uid="uid://dpskjp1gy2byg" path="res://Scenes/Levels/home_town_level.tscn" id="1_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://b04cbeog3qlpt" path="res://Scenes/PlayerChar.tscn" id="2_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://cibnvl0vdrln3" path="res://Scenes/Levels/battle_scene_level.tscn" id="2_ldgsr"]
 [ext_resource type="Script" uid="uid://4rvamqaiskmg" path="res://Scripts/MonsterTeamComponent.cs" id="3_h4fw4"]
-[ext_resource type="Script" uid="uid://di5crknqv2au" path="res://Scripts/MonsterDefinitionResource.cs" id="4_1l0tm"]
 [ext_resource type="Resource" uid="uid://cdlmcqnlwe24" path="res://Resources/MDR_RedSlime.tres" id="4_v158k"]
 [ext_resource type="Script" uid="uid://bmecs3cuef4r1" path="res://Scripts/AttributeComponent.cs" id="8_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://cfxgrf5iyplfn" path="res://Scenes/HealthBar.tscn" id="8_v158k"]
@@ -41,7 +40,7 @@ position = Vector2(1, -72)
 
 [node name="MonsterTeamComponent" type="Node" parent="PlayerState"]
 script = ExtResource("3_h4fw4")
-MonsterTeam = Array[ExtResource("4_1l0tm")]([ExtResource("4_v158k"), ExtResource("4_v158k"), null, null, null, null])
+MonsterTeam = [ExtResource("4_v158k"), ExtResource("4_v158k"), null, null, null, null]
 metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
 [node name="BattleStateMachine" type="Node" parent="." node_paths=PackedStringArray("CharacterStates", "HealthBarParentNode")]
@@ -53,7 +52,7 @@ HealthBarParentNode = NodePath("../CanvasLayer/Control")
 
 [node name="EnemyMonsterTeamComponent" type="Node" parent="."]
 script = ExtResource("3_h4fw4")
-MonsterTeam = Array[ExtResource("4_1l0tm")]([ExtResource("4_v158k"), ExtResource("4_v158k"), null, null, null, null])
+MonsterTeam = [ExtResource("4_v158k"), ExtResource("4_v158k"), null, null, null, null]
 metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

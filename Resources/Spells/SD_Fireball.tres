@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpellDefinition" load_steps=4 format=3 uid="uid://dmgas4hpwu8w7"]
+
+[ext_resource type="Script" uid="uid://cs1o7vmne4qus" path="res://Scripts/Spell Framework/SpellDefinition.cs" id="1_8vjfs"]
+[ext_resource type="Resource" uid="uid://ge156abajbv5" path="res://Resources/Spells/DeliveryStrategies/ProjectileDeliveryStrategy.tres" id="1_mj086"]
+[ext_resource type="Resource" uid="uid://c4oa65aholu2q" path="res://Resources/Spells/TargetingStrategies/ProjectileTargetingStrategy.tres" id="2_cgi0h"]
+
+[resource]
+script = ExtResource("1_8vjfs")
+SpellName = "Fireball"
+Description = "Shoots a Fireball"
+ActionPointCost = 1
+CooldownTurns = 0.0
+_targetingStrategy = ExtResource("2_cgi0h")
+_deliveryStrategy = ExtResource("1_mj086")
+metadata/_custom_type_script = "uid://cs1o7vmne4qus"

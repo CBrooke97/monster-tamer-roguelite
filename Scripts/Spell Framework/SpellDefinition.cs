@@ -52,7 +52,8 @@ public partial class SpellDefinition : Resource
 
     // Wire up the three orthogonal behaviours. Each should be another Resource
     // that implements the corresponding interface.
-    [Export] private Resource _targetingStrategy;
+    [Export]
+    private Resource _targetingStrategy;
     
     public ITargetingStrategy TargetingStrategy
     {

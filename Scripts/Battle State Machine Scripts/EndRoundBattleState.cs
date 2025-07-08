@@ -15,6 +15,10 @@ public class EndRoundBattleState : BattleState
 
     public override BattleState? Tick()
     {
+        var context = BattleStateMachine.BattleContext;
+        
+        context.StartNewRound();
+        
         return BattleStateMachine.StartRoundBattleState;
     }
 

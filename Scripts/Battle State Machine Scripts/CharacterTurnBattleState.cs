@@ -14,14 +14,16 @@ public partial class CharacterTurnBattleState : BattleState
 
     public override void Enter()
     {
-        _turnController = BattleStateMachine.ActiveChar.TurnController;
+        var context = BattleStateMachine.BattleContext;
+        
+        _turnController = context.ActiveCharacter.TurnController;
 
-        Camera2D? camera2D = BattleStateMachine.ActiveChar.GetViewport().GetCamera2D();
+        Camera2D? camera2D = context.ActiveCharacter.GetViewport().GetCamera2D();
 
         if (camera2D != null)
         {
             camera2D.GetParent().RemoveChild(camera2D);
-            BattleStateMachine.ActiveChar.AddChild(camera2D);
+            context.ActiveCharacter.AddChild(camera2D);
         }
         
         _actionPoints = 1;
@@ -36,6 +38,8 @@ public partial class CharacterTurnBattleState : BattleState
             return BattleStateMachine.StartBattleState;   
         }
 
+        var context = BattleStateMachine.BattleContext;
+
         if (_currentAction != null)
         {
             if (_currentAction.IsComplete())
@@ -48,7 +52,7 @@ public partial class CharacterTurnBattleState : BattleState
         {
             TurnContext turnContext = new()
             {
-                ActiveChar = BattleStateMachine.ActiveChar
+                ActiveChar = context.ActiveCharacter
             };
 
             _currentAction = _turnController.ExecuteTurn(turnContext);
@@ -58,11 +62,10 @@ public partial class CharacterTurnBattleState : BattleState
         
         if (_actionPoints <= 0)
         {
-            BattleStateMachine.CharTurnQueueIndex++;
+            bool newRoundNeeded = context.AdvanceTurn();
             
-            if (BattleStateMachine.CharTurnQueueIndex >= BattleStateMachine.TurnQueue.Count)
+            if (newRoundNeeded)
             {
-                BattleStateMachine.CharTurnQueueIndex = 0;
                 return BattleStateMachine.EndRoundBattleState;
             }
             
@@ -78,19 +81,5 @@ public partial class CharacterTurnBattleState : BattleState
         _turnController = null;
         
         GD.Print("CharTurnState Exited");
-    }
-    
-    private TurnController? GetTurnController(CharacterBody2D character)
-    {
-        Array<Node> activeCharChildNodes = character.GetChildren();
-
-        foreach (Node child in activeCharChildNodes)
-        {
-            if (child is not TurnController turnController) continue;
-
-            return turnController;
-        }
-
-        return null;
     }
 }

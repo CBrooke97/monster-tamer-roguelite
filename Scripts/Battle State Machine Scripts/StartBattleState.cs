@@ -14,25 +14,6 @@ public class StartBattleState : BattleState
 
     public override void Enter()
     {
-        BattleStateMachine.TurnQueue = new Array<MTRCharacter>();
-
-        foreach (Node characterState in BattleStateMachine.CharacterStates)
-        {
-            MonsterTeamComponent? mtc = characterState.GetNodeOrNull<MonsterTeamComponent>("MonsterTeamComponent");
-
-            if (mtc == null)
-            {
-                GD.PrintErr($"The character state '{characterState.Name}' does not have a monster team component!");
-                continue;
-            }
-            
-            mtc.OnEnterBattle();
-
-            BattleStateMachine.TurnQueue += mtc.CharacterInstances;
-        }
-        
-        BattleStateMachine.TurnQueue.Shuffle();
-        
         WaitFrames = 60;
         GD.Print("StartBattleState Entered");
     }

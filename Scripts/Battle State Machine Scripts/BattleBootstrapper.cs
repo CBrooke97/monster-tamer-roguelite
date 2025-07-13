@@ -11,6 +11,9 @@ public partial class BattleBootstrapper : Node
     [Export] private Array<Node> _characterStates;
     
     [Export] private PackedScene _monsterTemplateScene;
+    [Export] private PackedScene _healthBarUIScene;
+    [Export] private CanvasLayer _uiCanvasLayer;
+    
     private BattleStateMachine _battleStateMachine;
 
     public override void _Ready()
@@ -30,6 +33,13 @@ public partial class BattleBootstrapper : Node
             mtc.OnEnterBattle();
 
             characterInstances.AddRange(mtc.CharacterInstances);
+        }
+
+        foreach (var character in characterInstances)
+        {
+            var healthBarUI = _healthBarUIScene.Instantiate<HealthBarUI>();
+            healthBarUI.Target = character;
+            _uiCanvasLayer?.AddChild(healthBarUI);
         }
 
         var context = new BattleContext(characterInstances);

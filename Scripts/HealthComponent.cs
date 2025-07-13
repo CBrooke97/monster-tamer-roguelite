@@ -16,6 +16,9 @@ public partial class HealthComponent : Node
 	
 	[Export] public double BaseHealth = 100.0f;
 
+	public double MaxHealth => _maxHealth;
+	public double CurrentHealth => _currentHealth;
+	
 	private double _maxHealth;
 	private double _currentHealth;
 	

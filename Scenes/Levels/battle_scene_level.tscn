@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://bcoek8c6p5wyx" path="res://Scenes/EnemyChar.tscn" id="6_06ehk"]
 [ext_resource type="Script" uid="uid://4rvamqaiskmg" path="res://Scripts/MonsterTeamComponent.cs" id="6_g0pb0"]
 [ext_resource type="Script" uid="uid://e72tdyua80tl" path="res://Scripts/AITurnController.cs" id="7_3y5fu"]
-[ext_resource type="Script" uid="uid://di5crknqv2au" path="res://Scripts/MonsterDefinitionResource.cs" id="7_g0pb0"]
 [ext_resource type="Resource" uid="uid://dgcqoy0j2sod1" path="res://Resources/MDR_RedDragon.tres" id="8_rb73h"]
 [ext_resource type="Script" uid="uid://dnhr8lknrqi8f" path="res://Scripts/Battle State Machine Scripts/BattleBootstrapper.cs" id="11_pwcn5"]
+[ext_resource type="PackedScene" uid="uid://cfxgrf5iyplfn" path="res://Scenes/HealthBar.tscn" id="12_pwcn5"]
 
 [node name="BattleSceneLevel" type="Node2D"]
 
@@ -51,7 +51,7 @@ metadata/_custom_type_script = "uid://de4oy4p43261n"
 
 [node name="MonsterTeamComponent" type="Node" parent="PlayerState"]
 script = ExtResource("6_g0pb0")
-MonsterTeam = Array[ExtResource("7_g0pb0")]([ExtResource("8_rb73h"), ExtResource("8_rb73h"), null, null, null, null])
+MonsterTeam = [ExtResource("8_rb73h"), ExtResource("8_rb73h"), null, null, null, null]
 metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
 [node name="EnemyState" type="Node" parent="."]
@@ -70,11 +70,15 @@ metadata/_custom_type_script = "uid://e72tdyua80tl"
 
 [node name="MonsterTeamComponent" type="Node" parent="EnemyState"]
 script = ExtResource("6_g0pb0")
-MonsterTeam = Array[ExtResource("7_g0pb0")]([ExtResource("8_rb73h"), null, null, null, null, null])
+MonsterTeam = [ExtResource("8_rb73h"), null, null, null, null, null]
 metadata/_custom_type_script = "uid://4rvamqaiskmg"
 
-[node name="BattleBootstrapper" type="Node" parent="." node_paths=PackedStringArray("_characterStates")]
+[node name="BattleBootstrapper" type="Node" parent="." node_paths=PackedStringArray("_characterStates", "_uiCanvasLayer")]
 script = ExtResource("11_pwcn5")
 _characterStates = [NodePath("../PlayerState"), NodePath("../EnemyState")]
 _monsterTemplateScene = ExtResource("6_06ehk")
+_healthBarUIScene = ExtResource("12_pwcn5")
+_uiCanvasLayer = NodePath("../CanvasLayer")
 metadata/_custom_type_script = "uid://dnhr8lknrqi8f"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfxgrf5iyplfn"]
+[gd_scene load_steps=4 format=3 uid="uid://cfxgrf5iyplfn"]
 
 [ext_resource type="Texture2D" uid="uid://b7d3v8x73ta60" path="res://Assets/UI/Health_01.png" id="1_n0c2p"]
 [ext_resource type="Texture2D" uid="uid://cprr2v5d4yca6" path="res://Assets/UI/Health_01_Bar01_CroppedSides.png" id="2_7onog"]
+[ext_resource type="Script" uid="uid://stmix7s7xnrc" path="res://Scripts/HealthBarUI.cs" id="3_2s5sm"]
 
 [node name="TextureProgressBar" type="TextureProgressBar"]
 offset_right = 64.0
@@ -10,3 +11,6 @@ value = 100.0
 texture_under = ExtResource("1_n0c2p")
 texture_progress = ExtResource("2_7onog")
 texture_progress_offset = Vector2(16, 0)
+script = ExtResource("3_2s5sm")
+_targetPosOffset = Vector2(-32, -20)
+metadata/_custom_type_script = "uid://stmix7s7xnrc"
